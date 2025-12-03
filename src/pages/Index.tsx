@@ -9,6 +9,7 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isDark, setIsDark] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const theme = localStorage.getItem('theme');
@@ -21,6 +22,7 @@ const Index = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (window.scrollY / totalHeight) * 100;
       setScrollProgress(progress);
+      setShowScrollTop(window.scrollY > 300);
 
       const sections = ['home', 'map', 'news', 'stations', 'reviews', 'contacts'];
       for (const section of sections) {
@@ -131,6 +133,10 @@ const Index = () => {
   const scrollToSection = (section: string) => {
     setActiveSection(section);
     document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -466,6 +472,16 @@ const Index = () => {
           <p>© 2024 Метро Барнаула. Будущее начинается здесь.</p>
         </div>
       </footer>
+
+      {showScrollTop && (
+        <Button
+          onClick={scrollToTop}
+          size="icon"
+          className="fixed bottom-8 right-8 z-40 w-14 h-14 rounded-full shadow-lg glow"
+        >
+          <Icon name="ArrowUp" size={24} />
+        </Button>
+      )}
     </div>
   );
 };
