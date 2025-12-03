@@ -8,6 +8,7 @@ import Icon from "@/components/ui/icon";
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [isDark, setIsDark] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const theme = localStorage.getItem('theme');
@@ -15,6 +16,27 @@ const Index = () => {
       setIsDark(true);
       document.documentElement.classList.add('dark');
     }
+
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      setScrollProgress(progress);
+
+      const sections = ['home', 'map', 'news', 'stations', 'reviews', 'contacts'];
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const toggleTheme = () => {
@@ -113,7 +135,15 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background" style={{ backgroundImage: 'url(https://cdn.poehali.dev/files/0affefa9-6de1-466c-9108-4cfad99d6bee.jpg)', backgroundSize: 'cover', backgroundAttachment: 'fixed', backgroundPosition: 'center' }}>
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-background/80 border-b border-border">
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <div className="h-1 bg-muted">
+          <div 
+            className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-300"
+            style={{ width: `${scrollProgress}%` }}
+          />
+        </div>
+      </div>
+      <nav className="fixed top-1 left-0 right-0 z-50 backdrop-blur-lg bg-background/80 border-b border-border">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
