@@ -12,6 +12,8 @@ const Index = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [ticketModalOpen, setTicketModalOpen] = useState(false);
+  const [passModalOpen, setPassModalOpen] = useState(false);
+  const [appModalOpen, setAppModalOpen] = useState(false);
 
   useEffect(() => {
     const theme = localStorage.getItem('theme');
@@ -324,7 +326,10 @@ const Index = () => {
                 <CardDescription>45 ₽ за поездку</CardDescription>
               </CardHeader>
             </Card>
-            <Card className="border-secondary/20 hover:border-secondary transition-all hover:glow-purple">
+            <Card 
+              className="border-secondary/20 hover:border-secondary transition-all hover:glow-purple cursor-pointer"
+              onClick={() => setPassModalOpen(true)}
+            >
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center mb-4">
                   <Icon name="CreditCard" className="text-secondary" size={24} />
@@ -333,7 +338,10 @@ const Index = () => {
                 <CardDescription>1200 ₽ на месяц</CardDescription>
               </CardHeader>
             </Card>
-            <Card className="border-primary/20 hover:border-primary transition-all hover:glow">
+            <Card 
+              className="border-primary/20 hover:border-primary transition-all hover:glow cursor-pointer"
+              onClick={() => setAppModalOpen(true)}
+            >
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
                   <Icon name="Smartphone" className="text-primary" size={24} />
@@ -624,6 +632,213 @@ const Index = () => {
                 <Button variant="outline" className="flex-1" size="lg">
                   <Icon name="Info" className="mr-2" size={20} />
                   Подробнее
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {passModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+            onClick={() => setPassModalOpen(false)}
+          />
+          <Card className="relative z-10 w-full max-w-2xl border-2 border-secondary glow-purple animate-fade-in">
+            <CardHeader className="border-b border-border">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center">
+                    <Icon name="CreditCard" className="text-secondary" size={32} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-3xl">Проездной билет</CardTitle>
+                    <CardDescription className="text-lg mt-1">Безлимитные поездки на месяц</CardDescription>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setPassModalOpen(false)}
+                >
+                  <Icon name="X" size={24} />
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6 space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="p-4 bg-secondary/10 rounded-lg border border-secondary/20">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-muted-foreground">Стоимость на месяц</span>
+                      <Badge className="bg-secondary text-secondary-foreground">Выгодно</Badge>
+                    </div>
+                    <p className="text-4xl font-bold text-secondary">1200 ₽</p>
+                    <p className="text-sm text-muted-foreground mt-2">Экономия до 40%</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
+                      <Icon name="Infinity" className="text-secondary" size={20} />
+                      <span>Безлимитные поездки</span>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
+                      <Icon name="Calendar" className="text-secondary" size={20} />
+                      <span>Действует 30 дней</span>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
+                      <Icon name="Users" className="text-secondary" size={20} />
+                      <span>Персональный</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <h3 className="font-bold text-xl">Тарифы:</h3>
+                  <div className="space-y-3">
+                    <div className="p-4 border-2 border-secondary rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-semibold">Взрослый</p>
+                        <p className="text-2xl font-bold text-secondary">1200 ₽</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Полный тариф</p>
+                    </div>
+                    <div className="p-4 border border-border rounded-lg hover:border-secondary transition-colors">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-semibold">Студенческий</p>
+                        <p className="text-2xl font-bold">800 ₽</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Требуется студенческий</p>
+                    </div>
+                    <div className="p-4 border border-border rounded-lg hover:border-secondary transition-colors">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-semibold">Пенсионный</p>
+                        <p className="text-2xl font-bold">600 ₽</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Со скидкой 50%</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex gap-3 pt-4 border-t border-border">
+                <Button className="flex-1 bg-secondary hover:bg-secondary/90" size="lg">
+                  <Icon name="ShoppingCart" className="mr-2" size={20} />
+                  Купить проездной
+                </Button>
+                <Button variant="outline" className="flex-1" size="lg">
+                  <Icon name="Calculator" className="mr-2" size={20} />
+                  Рассчитать выгоду
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {appModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+            onClick={() => setAppModalOpen(false)}
+          />
+          <Card className="relative z-10 w-full max-w-2xl border-2 border-primary glow animate-fade-in">
+            <CardHeader className="border-b border-border">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Icon name="Smartphone" className="text-primary" size={32} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-3xl">Мобильное приложение</CardTitle>
+                    <CardDescription className="text-lg mt-1">Метро в вашем кармане</CardDescription>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setAppModalOpen(false)}
+                >
+                  <Icon name="X" size={24} />
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6 space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h3 className="font-bold text-xl">Возможности:</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 p-3 bg-card rounded-lg">
+                      <Icon name="CreditCard" className="text-primary flex-shrink-0 mt-1" size={20} />
+                      <div>
+                        <p className="font-semibold">Бесконтактная оплата</p>
+                        <p className="text-sm text-muted-foreground">NFC и QR-коды</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 bg-card rounded-lg">
+                      <Icon name="Map" className="text-primary flex-shrink-0 mt-1" size={20} />
+                      <div>
+                        <p className="font-semibold">Интерактивная карта</p>
+                        <p className="text-sm text-muted-foreground">Построение маршрутов</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 bg-card rounded-lg">
+                      <Icon name="Bell" className="text-primary flex-shrink-0 mt-1" size={20} />
+                      <div>
+                        <p className="font-semibold">Push-уведомления</p>
+                        <p className="text-sm text-muted-foreground">О задержках и новостях</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 bg-card rounded-lg">
+                      <Icon name="History" className="text-primary flex-shrink-0 mt-1" size={20} />
+                      <div>
+                        <p className="font-semibold">История поездок</p>
+                        <p className="text-sm text-muted-foreground">Статистика и аналитика</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <h3 className="font-bold text-xl">Скачать:</h3>
+                  <div className="space-y-3">
+                    <Button variant="outline" className="w-full justify-start h-auto p-4" size="lg">
+                      <div className="flex items-center gap-4 w-full">
+                        <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                          <Icon name="Apple" className="text-primary" size={24} />
+                        </div>
+                        <div className="text-left">
+                          <p className="text-xs text-muted-foreground">Загрузите в</p>
+                          <p className="font-bold text-base">App Store</p>
+                        </div>
+                      </div>
+                    </Button>
+                    <Button variant="outline" className="w-full justify-start h-auto p-4" size="lg">
+                      <div className="flex items-center gap-4 w-full">
+                        <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                          <Icon name="PlayCircle" className="text-primary" size={24} />
+                        </div>
+                        <div className="text-left">
+                          <p className="text-xs text-muted-foreground">Доступно в</p>
+                          <p className="font-bold text-base">Google Play</p>
+                        </div>
+                      </div>
+                    </Button>
+                  </div>
+                  <div className="p-4 bg-primary/10 rounded-lg border border-primary/20 mt-4">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Icon name="Gift" className="text-primary" size={24} />
+                      <p className="font-semibold">Бонус при установке</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Первая поездка бесплатно!</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex gap-3 pt-4 border-t border-border">
+                <Button className="flex-1 glow" size="lg">
+                  <Icon name="Download" className="mr-2" size={20} />
+                  Скачать приложение
+                </Button>
+                <Button variant="outline" className="flex-1" size="lg">
+                  <Icon name="Play" className="mr-2" size={20} />
+                  Смотреть видео
                 </Button>
               </div>
             </CardContent>
