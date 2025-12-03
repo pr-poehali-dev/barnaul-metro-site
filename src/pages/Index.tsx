@@ -10,6 +10,7 @@ const Index = () => {
   const [isDark, setIsDark] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const theme = localStorage.getItem('theme');
@@ -132,6 +133,7 @@ const Index = () => {
 
   const scrollToSection = (section: string) => {
     setActiveSection(section);
+    setMobileMenuOpen(false);
     document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -187,9 +189,57 @@ const Index = () => {
                 <Icon name={isDark ? "Sun" : "Moon"} size={20} />
               </Button>
             </div>
+            <div className="flex md:hidden gap-2 items-center">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleTheme}
+              >
+                <Icon name={isDark ? "Sun" : "Moon"} size={20} />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                <Icon name={mobileMenuOpen ? "X" : "Menu"} size={24} />
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
+
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          <div 
+            className="absolute inset-0 bg-background/95 backdrop-blur-lg"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div className="relative h-full flex flex-col items-center justify-center gap-6 p-8">
+            {[
+              { id: "home", label: "Главная", icon: "Home" },
+              { id: "map", label: "Карта", icon: "Map" },
+              { id: "news", label: "Новости", icon: "Newspaper" },
+              { id: "stations", label: "Станции", icon: "MapPin" },
+              { id: "reviews", label: "Отзывы", icon: "MessageSquare" },
+              { id: "contacts", label: "Контакты", icon: "Phone" }
+            ].map(item => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`flex items-center gap-3 px-8 py-4 rounded-xl text-xl font-medium transition-all w-full max-w-xs ${
+                  activeSection === item.id 
+                    ? "bg-primary text-primary-foreground glow" 
+                    : "bg-card hover:bg-card/80"
+                }`}
+              >
+                <Icon name={item.icon as any} size={24} />
+                <span>{item.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <section id="home" className="pt-32 pb-20 px-4">
         <div className="container mx-auto">
