@@ -11,8 +11,8 @@ const Index = () => {
   const stations = [
     {
       id: 1,
-      name: "Центральная",
-      image: "https://cdn.poehali.dev/projects/4ab61608-89a4-4de5-b221-e8a3af2a1001/files/c191c9f9-de97-46da-9117-cdeae115f670.jpg",
+      name: "Парковая",
+      image: "https://cdn.poehali.dev/files/669a06a3-21aa-473a-a334-36cbaa978cc8.jpeg",
       description: "Главная станция метрополитена с современной архитектурой",
       rating: 4.8,
       reviews: 234
