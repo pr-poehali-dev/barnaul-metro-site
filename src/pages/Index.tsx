@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +7,26 @@ import Icon from "@/components/ui/icon";
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState("home");
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const theme = localStorage.getItem('theme');
+    if (theme === 'dark') {
+      setIsDark(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+    if (!isDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  };
 
   const stations = [
     {
@@ -102,7 +122,7 @@ const Index = () => {
               </div>
               <h1 className="text-2xl font-bold text-glow">МЕТРО БАРНАУЛА</h1>
             </div>
-            <div className="hidden md:flex gap-6">
+            <div className="hidden md:flex gap-6 items-center">
               {[
                 { id: "home", label: "Главная", icon: "Home" },
                 { id: "map", label: "Карта", icon: "Map" },
@@ -122,6 +142,14 @@ const Index = () => {
                   <span>{item.label}</span>
                 </button>
               ))}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleTheme}
+                className="ml-4"
+              >
+                <Icon name={isDark ? "Sun" : "Moon"} size={20} />
+              </Button>
             </div>
           </div>
         </div>
