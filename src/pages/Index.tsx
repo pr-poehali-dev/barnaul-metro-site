@@ -11,6 +11,7 @@ const Index = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [ticketModalOpen, setTicketModalOpen] = useState(false);
 
   useEffect(() => {
     const theme = localStorage.getItem('theme');
@@ -311,7 +312,10 @@ const Index = () => {
             </CardContent>
           </Card>
           <div className="grid md:grid-cols-3 gap-6 mt-8">
-            <Card className="border-primary/20 hover:border-primary transition-all hover:glow">
+            <Card 
+              className="border-primary/20 hover:border-primary transition-all hover:glow cursor-pointer"
+              onClick={() => setTicketModalOpen(true)}
+            >
               <CardHeader>
                 <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center mb-4">
                   <Icon name="Ticket" className="text-primary" size={24} />
@@ -531,6 +535,100 @@ const Index = () => {
         >
           <Icon name="ArrowUp" size={24} />
         </Button>
+      )}
+
+      {ticketModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+            onClick={() => setTicketModalOpen(false)}
+          />
+          <Card className="relative z-10 w-full max-w-2xl border-2 border-primary glow animate-fade-in">
+            <CardHeader className="border-b border-border">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Icon name="Ticket" className="text-primary" size={32} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-3xl">Единый билет</CardTitle>
+                    <CardDescription className="text-lg mt-1">Удобная оплата проезда</CardDescription>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setTicketModalOpen(false)}
+                >
+                  <Icon name="X" size={24} />
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6 space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="p-4 bg-primary/10 rounded-lg border border-primary/20">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-muted-foreground">Стоимость поездки</span>
+                      <Badge className="bg-primary text-primary-foreground">Акция</Badge>
+                    </div>
+                    <p className="text-4xl font-bold text-primary">45 ₽</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
+                      <Icon name="Clock" className="text-primary" size={20} />
+                      <span>Действует 90 минут</span>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
+                      <Icon name="RefreshCcw" className="text-primary" size={20} />
+                      <span>1 пересадка бесплатно</span>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-card rounded-lg">
+                      <Icon name="Smartphone" className="text-primary" size={20} />
+                      <span>Оплата картой и NFC</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <h3 className="font-bold text-xl">Где купить:</h3>
+                  <div className="space-y-3">
+                    <div className="p-4 border border-border rounded-lg hover:border-primary transition-colors">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Icon name="MapPin" className="text-primary" size={20} />
+                        <p className="font-semibold">В кассах метро</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">На любой станции</p>
+                    </div>
+                    <div className="p-4 border border-border rounded-lg hover:border-primary transition-colors">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Icon name="Smartphone" className="text-primary" size={20} />
+                        <p className="font-semibold">В приложении</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">iOS и Android</p>
+                    </div>
+                    <div className="p-4 border border-border rounded-lg hover:border-primary transition-colors">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Icon name="Store" className="text-primary" size={20} />
+                        <p className="font-semibold">В киосках</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground">По всему городу</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex gap-3 pt-4 border-t border-border">
+                <Button className="flex-1 glow" size="lg">
+                  <Icon name="Smartphone" className="mr-2" size={20} />
+                  Купить в приложении
+                </Button>
+                <Button variant="outline" className="flex-1" size="lg">
+                  <Icon name="Info" className="mr-2" size={20} />
+                  Подробнее
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   );
