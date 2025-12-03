@@ -27,8 +27,8 @@ const Index = () => {
     },
     {
       id: 3,
-      name: "Технопарк",
-      image: "https://cdn.poehali.dev/projects/4ab61608-89a4-4de5-b221-e8a3af2a1001/files/9308593e-f0d0-42fc-ba11-defee59a4648.jpg",
+      name: "ТЦ Россия",
+      image: "https://cdn.poehali.dev/files/e5ff9262-7a70-4bcc-87a7-2d4a1cca7843.jpeg",
       description: "Футуристичная станция в деловом районе",
       rating: 4.9,
       reviews: 312
