@@ -190,7 +190,7 @@ const Index = () => {
           <Card className="overflow-hidden border-2 border-primary/20 glow">
             <CardContent className="p-0">
               <img 
-                src="https://cdn.poehali.dev/projects/4ab61608-89a4-4de5-b221-e8a3af2a1001/files/9308593e-f0d0-42fc-ba11-defee59a4648.jpg"
+                src="https://cdn.poehali.dev/files/f6b6d492-0172-4ecf-8ea7-cfdb7aec7493.jpeg"
                 alt="Карта метро"
                 className="w-full"
               />
